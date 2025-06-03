@@ -1,0 +1,201 @@
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Paper,
+  TextField,
+  Typography,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import LocalDrinkIcon from "@mui/icons-material/LocalDrink";
+import ScienceIcon from "@mui/icons-material/Science";
+import CategoryIcon from "@mui/icons-material/Category";
+import OpacityIcon from "@mui/icons-material/Opacity";
+import LocalCafeIcon from "@mui/icons-material/LocalCafe";
+import WineBarIcon from "@mui/icons-material/WineBar";
+import { useState } from "react";
+import { useAppContext } from "../context/AppContext";
+
+const containers = [
+  { label: "Glass", volume: 250, icon: <LocalDrinkIcon color="primary" /> },
+  { label: "Small Bottle", volume: 500, icon: <ScienceIcon color="primary" /> },
+  {
+    label: "Regular Bottle",
+    volume: 750,
+    icon: <CategoryIcon color="primary" />,
+  },
+  {
+    label: "Large Bottle",
+    volume: 1000,
+    icon: <OpacityIcon color="primary" />,
+  },
+  { label: "Coffee Mug", volume: 350, icon: <LocalCafeIcon color="primary" /> },
+  { label: "Milk Glass", volume: 300, icon: <WineBarIcon color="primary" /> },
+];
+
+const AddIntakeModal = ({ handleClose }) => {
+  const { addLog } = useAppContext();
+  const [selected, setSelected] = useState(null);
+  const [customAmount, setCustomAmount] = useState("");
+
+  const handleSubmit = () => {
+    const amount = selected?.volume || parseInt(customAmount);
+    const label = selected?.label.toLowerCase() || "custom";
+
+    if (amount > 0) {
+      addLog(amount, label);
+      handleClose();
+      setSelected(null);
+      setCustomAmount("");
+    }
+  };
+
+  return (
+    <Box
+      sx={{
+        backgroundColor: "white",
+        width: {
+          xs: "85dvw", // xs = extra small (mobile)
+          sm: "60dvw", // sm = small (tablets)
+          md: "35dvw", // md = medium (small laptops)
+          lg: "30dvw", // lg = large (desktops)
+          xl: "25dvw", // xl = extra large screens
+        },
+        height: "fit-content",
+        borderRadius: "0.5rem",
+        padding: "1rem",
+        // Center the modal
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+      }}
+    >
+      <Typography
+        variant="h6"
+        fontWeight="bold"
+        sx={{ fontSize: { xs: "1rem", sm: "1.2rem", md: "1.5rem" } }}
+      >
+        Add Water Intake
+      </Typography>
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        fontWeight="bold"
+        sx={{ fontSize: { xs: "0.7rem", sm: "0.8rem", md: "0.875rem" } }}
+      >
+        Select a preset size or enter a custom amount
+      </Typography>
+      <IconButton
+        onClick={handleClose}
+        sx={{
+          position: "absolute",
+          top: 8,
+          right: 8,
+          color: "grey.500",
+        }}
+        aria-label="close"
+      >
+        <CloseIcon />
+      </IconButton>
+
+      <Typography
+        variant="body2"
+        sx={{
+          mt: 3,
+          mb: 1,
+          fontSize: { xs: "0.7rem", sm: "0.8rem", md: "0.875rem" },
+        }}
+      >
+        Container type
+      </Typography>
+
+      <Grid container spacing={2} sx={{ mb: 2 }}>
+        {containers.map((item, idx) => (
+          <Grid size={{ xs: 4, md: 4 }} key={idx}>
+            <Paper
+              elevation={selected?.label === item.label ? 4 : 1}
+              onClick={() => {
+                setSelected(item);
+                setCustomAmount("");
+              }}
+              sx={{
+                height: "70%",
+                p: 1.5,
+                borderRadius: 2,
+                textAlign: "center",
+                cursor: "pointer",
+                border:
+                  selected?.label === item.label
+                    ? "2px solid #1976d2"
+                    : "1px solid #ccc",
+                bgcolor: selected?.label === item.label ? "#e3f2fd" : "white",
+              }}
+            >
+              <Box mb={0.5}>{item.icon}</Box>
+              <Typography
+                variant="body2"
+                sx={{
+                  fontSize: { xs: "0.6rem", sm: "0.7rem", md: "0.875rem" },
+                }}
+              >
+                {item.label}
+              </Typography>
+
+              <Typography
+                variant="body2"
+                fontWeight="bold"
+                sx={{
+                  fontSize: { xs: "0.65rem", sm: "0.75rem", md: "0.9rem" },
+                }}
+              >
+                {item.volume}ml
+              </Typography>
+            </Paper>
+          </Grid>
+        ))}
+      </Grid>
+
+      <Box mt={2}>
+        <Typography
+          variant="body2"
+          mb={0.5}
+          sx={{ fontSize: { xs: "0.7rem", sm: "0.8rem", md: "0.875rem" } }}
+        >
+          Custom Amount (ml)
+        </Typography>
+        <TextField
+          fullWidth
+          variant="outlined"
+          size="small"
+          type="number"
+          placeholder="Enter amount in ml"
+          value={customAmount}
+          onChange={(e) => {
+            setCustomAmount(e.target.value);
+            setSelected(null);
+          }}
+        />
+      </Box>
+
+      <Button
+        fullWidth
+        variant="contained"
+        sx={{
+          mt: 3,
+          backgroundColor: "black",
+          color: "white",
+          textTransform: "none",
+          fontSize: { xs: "0.75rem", sm: "0.85rem", md: "1rem" },
+          "&:hover": { backgroundColor: "#333" },
+        }}
+        onClick={handleSubmit}
+      >
+        Add {selected?.volume || customAmount || ""}ml
+      </Button>
+    </Box>
+  );
+};
+
+export default AddIntakeModal;
