@@ -2,29 +2,39 @@ import HydrationSummary from "./components/HydrationSummary";
 import Navbar from "./components/Navbar";
 import { Box } from "@mui/material";
 import QuickAdd from "./components/QuickAdd";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <Box
       sx={{
-        width: {
-          xs: "100dvw", // full width on mobile
-          md: "80dvw", // 80% of viewport width on medium+ screens
-        },
-        margin: "0 auto",
-        mt: 2,
+        minHeight: "100dvh",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
-      <Navbar />
       <Box
         sx={{
-          paddingLeft: "1rem",
-          paddingRight: "1rem",
+          width: {
+            xs: "100dvw",
+            md: "80dvw",
+          },
+          margin: "0 auto",
+          mt: 2,
+          flexGrow: 1, // take up all available space
         }}
       >
-        <HydrationSummary />
-        <QuickAdd />
+        <Navbar />
+        <Box
+          sx={{
+            px: "1rem",
+          }}
+        >
+          <HydrationSummary />
+          <QuickAdd />
+        </Box>
       </Box>
+      <Footer />
     </Box>
   );
 }
