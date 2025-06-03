@@ -1,6 +1,7 @@
 import HydrationSummary from "./components/HydrationSummary";
 import Navbar from "./components/Navbar";
 import { Box } from "@mui/material";
+import QuickAdd from "./components/QuickAdd";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         }}
       >
         <HydrationSummary />
+        <QuickAdd />
       </Box>
     </Box>
   );
