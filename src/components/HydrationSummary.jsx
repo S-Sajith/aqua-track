@@ -9,17 +9,22 @@ import {
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import OpacityIcon from "@mui/icons-material/Opacity";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
-import { useAppContext } from "../context/AppContext"; // ⬅️ adjust path if needed
+import { useAppContext } from "../context/AppContext";
 
 const HydrationSummary = () => {
-  const { baseGoal } = useAppContext();
-  const currentIntake = 750;
+  const { baseGoal, hydrationData, resetToday } = useAppContext();
 
-  const percentage = Math.round((currentIntake / baseGoal) * 100);
-  const remaining = baseGoal - currentIntake;
+  const today = new Date().toISOString().split("T")[0];
+  const todayEntry = hydrationData.find((entry) => entry.date === today);
+  const currentIntake = todayEntry?.totalIntake || 0;
 
-  const today = new Date();
-  const formattedDate = today.toLocaleDateString("en-US", {
+  const percentage = Math.min(
+    100,
+    Math.round((currentIntake / baseGoal) * 100)
+  );
+  const remaining = Math.max(0, baseGoal - currentIntake);
+
+  const formattedDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     month: "long",
     day: "numeric",
@@ -91,6 +96,7 @@ const HydrationSummary = () => {
         <Button
           variant="outlined"
           sx={{ color: "white", borderColor: "white" }}
+          onClick={resetToday}
         >
           Reset Today
         </Button>
