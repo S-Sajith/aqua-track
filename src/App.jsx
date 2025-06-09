@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import { Box } from "@mui/material";
 import QuickAdd from "./components/QuickAdd";
 import Footer from "./components/Footer";
+import TabBar from "./components/TabBar/TabBar";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         >
           <HydrationSummary />
           <QuickAdd />
+          <TabBar />
         </Box>
       </Box>
       <Footer />
