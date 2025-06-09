@@ -56,9 +56,21 @@ export const AppProvider = ({ children }) => {
     );
   };
 
+  const resetLogs = () => {
+    setHydrationData([]);
+  };
+
   return (
     <AppContext.Provider
-      value={{ baseGoal, setBaseGoal, hydrationData, addLog, resetToday }}
+      value={{
+        baseGoal,
+        setBaseGoal,
+        hydrationData,
+        setHydrationData,
+        addLog,
+        resetToday,
+        resetLogs,
+      }}
     >
       {children}
     </AppContext.Provider>

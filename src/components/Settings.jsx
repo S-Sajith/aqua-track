@@ -15,7 +15,66 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useAppContext } from "../context/AppContext";
 
 const Settings = ({ handleClose }) => {
-  const { baseGoal, setBaseGoal } = useAppContext();
+  const { baseGoal, setBaseGoal, resetLogs, setHydrationData } =
+    useAppContext();
+
+  const handleExport = () => {
+    const localHistory = localStorage.getItem("aquatrack_history");
+
+    if (!localHistory) {
+      alert("No history found to export.");
+      return;
+    }
+
+    const today = new Date().toISOString().split("T")[0]; // "YYYY-MM-DD"
+    const fileName = `aquatrack_backup_${today}.json`;
+
+    const blob = new Blob([localHistory], { type: "application/json" });
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = fileName;
+    link.click();
+    URL.revokeObjectURL(link.href);
+    handleClose();
+  };
+
+  const handleImport = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const imported = JSON.parse(event.target.result);
+
+        if (!Array.isArray(imported)) {
+          throw new Error("Invalid format. Expected an array.");
+        }
+
+        localStorage.setItem("aquatrack_history", JSON.stringify(imported));
+        setHydrationData(imported);
+        alert("Import successful!");
+        handleClose();
+      } catch (err) {
+        alert("Import failed: Invalid JSON structure.");
+      }
+    };
+
+    reader.readAsText(file);
+  };
+
+  const handleReset = () => {
+    const confirm = window.confirm(
+      "This will delete all hydration history. Continue?"
+    );
+    if (confirm) {
+      localStorage.removeItem("aquatrack_history");
+      resetLogs();
+      alert("All hydration data has been reset.");
+      handleClose();
+    }
+  };
 
   return (
     <Box
@@ -105,13 +164,38 @@ const Settings = ({ handleClose }) => {
         Data Management
       </Typography>
       <Box sx={{ mt: 1, display: "flex", flexDirection: "column", gap: 1 }}>
-        <Button variant="outlined" startIcon={<DownloadIcon />}>
+        <Button
+          variant="outlined"
+          startIcon={<DownloadIcon />}
+          onClick={handleExport}
+        >
           Export History
         </Button>
-        <Button variant="outlined" startIcon={<UploadIcon />}>
-          Import History
-        </Button>
-        <Button variant="contained" color="error" startIcon={<DeleteIcon />}>
+
+        <label htmlFor="import-json">
+          <input
+            type="file"
+            accept=".json"
+            id="import-json"
+            hidden
+            onChange={handleImport}
+          />
+          <Button
+            component="span"
+            variant="outlined"
+            startIcon={<UploadIcon />}
+            sx={{ width: "100%" }}
+          >
+            Import History
+          </Button>
+        </label>
+
+        <Button
+          variant="contained"
+          color="error"
+          startIcon={<DeleteIcon />}
+          onClick={handleReset}
+        >
           Reset All Data
         </Button>
       </Box>
