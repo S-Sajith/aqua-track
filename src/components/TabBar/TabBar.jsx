@@ -2,6 +2,7 @@ import { Box, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import TodayTab from "./TodayTab";
 import HistoryTab from "./HistoryTab";
+import InsightsTab from "./InsightsTab";
 
 const TabBar = () => {
   const [tabIndex, setTabIndex] = useState(0);
@@ -12,7 +13,7 @@ const TabBar = () => {
 
   return (
     <div>
-      <Box mt={4} p={2}>
+      <Box mt={4} p={2} borderRadius={2} boxShadow={2}>
         <Tabs
           value={tabIndex}
           onChange={handleChange}
@@ -21,10 +22,12 @@ const TabBar = () => {
         >
           <Tab label="Today" />
           <Tab label="History" />
+          <Tab label="Insights" />
         </Tabs>
 
         {tabIndex === 0 && <TodayTab />}
         {tabIndex === 1 && <HistoryTab />}
+        {tabIndex === 2 && <InsightsTab />}
       </Box>
     </div>
   );

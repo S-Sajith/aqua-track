@@ -52,7 +52,7 @@ const HistoryTab = () => {
           <Box
             sx={{
               flexGrow: 1,
-              height: 16,
+              height: 12,
               mx: 1,
               backgroundColor: "#eee",
               borderRadius: 4,
