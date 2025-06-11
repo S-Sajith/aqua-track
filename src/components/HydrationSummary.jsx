@@ -1,18 +1,11 @@
-import {
-  Box,
-  Typography,
-  LinearProgress,
-  Button,
-  Chip,
-  Tooltip,
-} from "@mui/material";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import OpacityIcon from "@mui/icons-material/Opacity";
-import WhatshotIcon from "@mui/icons-material/Whatshot";
+import { Box, Typography, LinearProgress, Button, Chip } from "@mui/material";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import { useAppContext } from "../context/AppContext";
 
 const HydrationSummary = () => {
-  const { baseGoal, hydrationData, resetToday } = useAppContext();
+  const { baseGoal, hydrationData, resetToday, achievements } = useAppContext();
+
+  const unlockedAchievements = achievements.filter((a) => a.achieved);
 
   const today = new Date().toISOString().split("T")[0];
   const todayEntry = hydrationData.find((entry) => entry.date === today);
@@ -86,16 +79,44 @@ const HydrationSummary = () => {
         <WhatshotIcon fontSize="small" /> Weather: +500ml needed
       </Typography> */}
 
-      {/* <Box mt={2} display="flex" flexWrap="wrap" gap={1}>
-        <Chip label="1 day streak" />
-        <Chip label="Hydration Hero" />
-        <Chip label="+500ml" />
-      </Box> */}
+      {unlockedAchievements.length > 0 && (
+        <Box mt={2} display="flex" flexWrap="wrap" gap={1}>
+          {unlockedAchievements.map((a) => (
+            <Chip
+              key={a.key}
+              label={
+                <Typography sx={{ fontWeight: "bold", fontSize: "0.75rem" }}>
+                  {a.title}
+                </Typography>
+              }
+              icon={a.icon}
+              size="small"
+              sx={{
+                backgroundColor: "rgba(255, 255, 255, 0.2)",
+                color: "white",
+                fontWeight: "bold",
+                px: 0.5,
+                borderRadius: "999px",
+                ".MuiChip-icon": {
+                  color: "white",
+                  fontSize: 14,
+                  ml: "4px",
+                },
+              }}
+            />
+          ))}
+        </Box>
+      )}
 
       <Box mt={2}>
         <Button
-          variant="outlined"
-          sx={{ color: "white", borderColor: "white" }}
+          startIcon={<RestartAltIcon />}
+          sx={{
+            color: "white",
+            borderColor: "white",
+            backgroundColor: "rgba(255, 255, 255, 0.2)",
+            textTransform: "none",
+          }}
           onClick={resetToday}
         >
           Reset Today
