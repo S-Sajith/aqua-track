@@ -167,11 +167,32 @@ const AchievementsTab = () => {
       </Grid>
 
       {/* Lifetime Stats */}
-      <Box display="flex" flexWrap="wrap" mt={4} gap={2}>
-        <Stat label="Total Water" value={`${totalWater}ml`} />
-        <Stat label="Days Tracked" value={daysTracked} />
-        <Stat label="Best Streak" value={`${maxTrackedStreak} days`} />
-        {/* <Stat label="Goals Met" value={goalMetDays} /> */}
+      <Box mt={4}>
+        <Typography variant="h6" fontWeight="bold" mb={2}>
+          Lifetime Stats
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid size={{ xs: 6, md: 3 }}>
+            <Stat
+              label="Total Water"
+              value={`${totalWater.toLocaleString()}ml`}
+            />
+          </Grid>
+          <Grid size={{ xs: 6, md: 3 }}>
+            <Stat label="Days Tracked" value={daysTracked} />
+          </Grid>
+          <Grid size={{ xs: 6, md: 3 }}>
+            <Stat label="Best Streak" value={`${maxTrackedStreak} days`} />
+          </Grid>
+          <Grid size={{ xs: 6, md: 3 }}>
+            <Stat
+              label="Goals Met"
+              value={
+                sortedData.filter((day) => day.totalIntake >= baseGoal).length
+              }
+            />
+          </Grid>
+        </Grid>
       </Box>
     </Box>
   );
