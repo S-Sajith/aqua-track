@@ -1,17 +1,10 @@
 import { Box, Typography, Grid, Paper, Chip } from "@mui/material";
 import { useAppContext } from "../../context/AppContext";
-import { parseISO, differenceInCalendarDays, isSameDay } from "date-fns";
-
-import BoltIcon from "@mui/icons-material/Bolt";
-import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
-import SunnyIcon from "@mui/icons-material/Sunny";
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import OpacityIcon from "@mui/icons-material/Opacity";
+import { parseISO, differenceInCalendarDays } from "date-fns";
 
 const AchievementsTab = () => {
-  const { hydrationData, baseGoal } = useAppContext();
+  const { hydrationData, baseGoal, achievements } = useAppContext();
 
-  const today = new Date();
   const sortedData = [...hydrationData].sort(
     (a, b) => new Date(a.date) - new Date(b.date)
   );
@@ -37,67 +30,6 @@ const AchievementsTab = () => {
     }
   }
 
-  // ✅ Goal Achiever %
-  const todayData = sortedData.find((day) =>
-    isSameDay(parseISO(day.date), today)
-  );
-  const todayGoalPercent = todayData
-    ? Math.round((todayData.totalIntake / baseGoal) * 100)
-    : 0;
-
-  const goalAchievedToday = todayData?.totalIntake >= baseGoal;
-
-  // ✅ Consistency King (today)
-  const todayLogs =
-    sortedData.find((day) => isSameDay(parseISO(day.date), today))?.logs || [];
-  const consistencyProgress = Math.min(todayLogs.length, 5);
-
-  // ✅ Early Bird
-  const earlyBird = todayLogs.some((log) => {
-    const [time, meridian] = log.time.split(" ");
-    const [hour] = time.split(":");
-    const hour24 = meridian === "PM" && +hour < 12 ? +hour + 12 : +hour;
-    return hour24 < 9;
-  });
-
-  const achievementCards = [
-    {
-      title: "Streak Master",
-      description: "Maintain a 3-day streak",
-      progress: `${Math.min(maxTrackedStreak, 3)}/3 days`,
-      achieved: maxTrackedStreak >= 3,
-      icon: <BoltIcon fontSize="medium" />,
-    },
-    {
-      title: "Goal Achiever",
-      description: "Reach your daily goal",
-      progress: `${todayGoalPercent}%`,
-      achieved: !!goalAchievedToday,
-      icon: <EmojiEventsIcon fontSize="medium" />,
-    },
-    {
-      title: "Early Bird",
-      description: "Drink water before 9 AM",
-      progress: earlyBird ? "✔️" : "Not yet",
-      achieved: earlyBird,
-      icon: <SunnyIcon fontSize="medium" />,
-    },
-    {
-      title: "Consistency King",
-      description: "Drink 5+ times in a day",
-      progress: `${consistencyProgress}/5 times`,
-      achieved: consistencyProgress >= 5,
-      icon: <CalendarTodayIcon fontSize="medium" />,
-    },
-    {
-      title: "Hydration Hero",
-      description: "Drink 150% of your daily goal",
-      progress: `${todayGoalPercent}%`,
-      achieved: todayGoalPercent >= 150,
-      icon: <OpacityIcon fontSize="medium" />,
-    },
-  ];
-
   return (
     <Box sx={{ mt: 2 }}>
       <Typography variant="h6" fontWeight="bold">
@@ -108,7 +40,7 @@ const AchievementsTab = () => {
       </Typography>
 
       <Grid container spacing={2}>
-        {achievementCards.map((ach, i) => (
+        {achievements.map((ach, i) => (
           <Grid size={{ xs: 6, md: 3 }} key={i}>
             <Paper
               elevation={1}
