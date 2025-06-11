@@ -47,14 +47,24 @@ const HistoryTab = () => {
               my: 1,
             }}
           >
-            <Typography sx={{ width: 40 }}>{day.day}</Typography>
-            <Typography sx={{ minWidth: 40 }}>{day.total}ml</Typography>
+            <Typography sx={{ width: 40 }} variant="body2">
+              {day.day}
+            </Typography>
+            <Typography
+              sx={{ minWidth: 40 }}
+              variant="body2"
+              color="text.secondary"
+            >
+              {day.total}ml
+            </Typography>
           </Box>
           <Box
             sx={{
               flexGrow: 1,
-              height: 12,
-              mx: 1,
+              height: {
+                xs: 8,
+                sm: 9,
+              },
               backgroundColor: "#eee",
               borderRadius: 4,
               overflow: "hidden",
