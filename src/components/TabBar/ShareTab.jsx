@@ -71,6 +71,7 @@ const ShareTab = () => {
             backgroundColor: "#000",
             color: "#fff",
             "&:hover": { backgroundColor: "#222" },
+            textTransform: "none",
           }}
           startIcon={<ContentCopy />}
         >
