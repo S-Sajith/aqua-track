@@ -20,7 +20,15 @@ const Navbar = () => {
       >
         <img src={logo} alt="Logo" style={{ height: "1.2rem" }} />
         <IconButton
-          sx={{ padding: "0" }}
+          sx={{
+            padding: "0",
+            "&:focus": {
+              outline: "none",
+            },
+            "&:focus-visible": {
+              outline: "none",
+            },
+          }}
           size="small"
           onClick={handleOpenSettings}
         >
