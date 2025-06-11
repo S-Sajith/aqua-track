@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { useAppContext } from "../../context/AppContext";
 import { parseISO, format, startOfWeek, addDays, isSameDay } from "date-fns";
+import React from "react";
 
 const HistoryTab = () => {
   const { hydrationData, baseGoal } = useAppContext();
@@ -36,7 +37,7 @@ const HistoryTab = () => {
       </Typography>
 
       {week.map((day, idx) => (
-        <>
+        <React.Fragment key={idx}>
           <Box
             key={idx}
             sx={{
@@ -67,7 +68,7 @@ const HistoryTab = () => {
               }}
             />
           </Box>
-        </>
+        </React.Fragment>
       ))}
     </Box>
   );
