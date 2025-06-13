@@ -1,7 +1,3 @@
-Sure! Here's the full updated README in plain markdown, all in one copyable block:
-
----
-
 # AquaTrack
 
 [![AquaTrack Logo](Logo.png)](https://aqua-track-app.netlify.app/)
@@ -95,5 +91,3 @@ Contributions are welcome! If you have suggestions or improvements:
 Stay hydrated! 💧
 
 ---
-
-Let me know if you'd like this saved into a file!
