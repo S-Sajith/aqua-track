@@ -55,10 +55,20 @@ export const AppProvider = ({ children }) => {
 
   const resetToday = () => {
     const today = new Date().toISOString().split("T")[0];
+
     setHydrationData((prev) =>
-      prev.map((entry) =>
-        entry.date === today ? { ...entry, logs: [], totalIntake: 0 } : entry
-      )
+      prev.map((entry) => {
+        if (entry.date !== today) return entry;
+
+        // Destructure to exclude caffeine-related fields
+        const { caffeineLogs, caffeineIntake, caffeineOffset, ...rest } = entry;
+
+        return {
+          ...rest,
+          logs: [],
+          totalIntake: 0,
+        };
+      })
     );
   };
 
