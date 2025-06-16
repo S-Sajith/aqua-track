@@ -72,25 +72,18 @@ export const AppProvider = ({ children }) => {
       (a, b) => new Date(a.date) - new Date(b.date)
     );
 
-    const totalWater = sortedData.reduce(
-      (sum, day) => sum + day.totalIntake,
-      0
-    );
+    let currentStreak = 1;
+    const reversedData = [...sortedData].reverse();
 
-    // --- Tracked streak logic
-    let trackedStreak = 1;
-    let maxTrackedStreak = 1;
-
-    for (let i = 1; i < sortedData.length; i++) {
-      const prevDate = parseISO(sortedData[i - 1].date);
-      const currDate = parseISO(sortedData[i].date);
-      const dayDiff = differenceInCalendarDays(currDate, prevDate);
+    for (let i = 1; i < reversedData.length; i++) {
+      const prevDate = parseISO(reversedData[i].date);
+      const currDate = parseISO(reversedData[i - 1].date);
+      const dayDiff = differenceInCalendarDays(prevDate, currDate);
 
       if (dayDiff === 1) {
-        trackedStreak++;
-        maxTrackedStreak = Math.max(maxTrackedStreak, trackedStreak);
-      } else if (dayDiff > 1) {
-        trackedStreak = 1;
+        currentStreak++;
+      } else if (dayDiff > 1 || differenceInCalendarDays(today, currDate) > 1) {
+        break;
       }
     }
 
@@ -117,8 +110,8 @@ export const AppProvider = ({ children }) => {
         key: "streak_master",
         title: "Streak Master",
         description: "Maintain a 3-day streak",
-        progress: `${Math.min(maxTrackedStreak, 3)}/3 days`,
-        achieved: maxTrackedStreak >= 3,
+        progress: `${Math.min(currentStreak, 3)}/3 days`,
+        achieved: currentStreak >= 3,
         icon: <BoltIcon fontSize="medium" />,
       },
       {
