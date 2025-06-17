@@ -14,7 +14,7 @@ import FlashOnIcon from "@mui/icons-material/FlashOn";
 import EmojiFoodBeverageIcon from "@mui/icons-material/EmojiFoodBeverage";
 import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 import { useState } from "react";
-import { useAppContext } from "../../context/AppContext";
+import { useAppContext } from "../context/AppContext";
 
 const caffeineSources = [
   {

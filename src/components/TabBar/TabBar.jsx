@@ -5,6 +5,7 @@ import HistoryTab from "./HistoryTab";
 import InsightsTab from "./InsightsTab";
 import AchievementsTab from "./AchievementsTab";
 import ShareTab from "./ShareTab";
+import CaffeineTab from "./CaffeineTab";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 const TabBar = () => {
@@ -55,14 +56,16 @@ const TabBar = () => {
           <Tab label="Today" />
           <Tab label="History" />
           <Tab label="Insights" />
+          <Tab label="Caffeine" />
           <Tab label="Achievements" />
           <Tab label="Share" />
         </Tabs>
         {tabIndex === 0 && <TodayTab />}
         {tabIndex === 1 && <HistoryTab />}
         {tabIndex === 2 && <InsightsTab />}
-        {tabIndex === 3 && <AchievementsTab />}
-        {tabIndex === 4 && <ShareTab />}
+        {tabIndex === 3 && <CaffeineTab />}
+        {tabIndex === 4 && <AchievementsTab />}
+        {tabIndex === 5 && <ShareTab />}
       </Box>
     </div>
   );
