@@ -11,7 +11,7 @@ import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { useAppContext } from "../context/AppContext";
-import CaffeineModal from "./Caffeine/CaffeineModal";
+import CaffeineModal from "./CaffeineModal";
 import { useState } from "react";
 
 const HydrationSummary = () => {
