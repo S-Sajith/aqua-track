@@ -10,12 +10,20 @@ import {
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import WbSunnyIcon from "@mui/icons-material/WbSunny";
 import { useAppContext } from "../context/AppContext";
 import CaffeineModal from "./CaffeineModal";
 import { useState } from "react";
 
 const HydrationSummary = () => {
-  const { baseGoal, hydrationData, resetToday, achievements } = useAppContext();
+  const {
+    baseGoal,
+    hydrationData,
+    resetToday,
+    achievements,
+    weatherAdjustment,
+  } = useAppContext();
+
   const [openCaffeineIntake, setOpenCaffeineIntake] = useState(false);
   const handleOpenCaffeineIntake = () => setOpenCaffeineIntake(true);
   const handleCloseCaffeineIntake = () => setOpenCaffeineIntake(false);
@@ -27,9 +35,12 @@ const HydrationSummary = () => {
   const currentIntake = todayEntry?.totalIntake || 0;
 
   const caffeineOffset = todayEntry?.caffeineOffset || 0;
-  const adjustedGoal = caffeineOffset
-    ? parseInt(baseGoal) + caffeineOffset
-    : parseInt(baseGoal);
+
+  // Calculate adjusted goal with weather and caffeine
+  const adjustedGoal =
+    Number(baseGoal) +
+    Number(weatherAdjustment || 0) +
+    Number(caffeineOffset || 0);
   const remaining = Math.max(0, adjustedGoal - currentIntake);
   const percentage = Math.min(
     100,
@@ -41,6 +52,13 @@ const HydrationSummary = () => {
     month: "long",
     day: "numeric",
   });
+
+  // Generate tooltip based on available offsets
+  const tooltipParts = [];
+  if (weatherAdjustment > 0)
+    tooltipParts.push(`+${weatherAdjustment}ml (weather)`);
+  if (caffeineOffset > 0) tooltipParts.push(`+${caffeineOffset}ml (caffeine)`);
+  const tooltipText = `Your goal is adjusted by ${tooltipParts.join(" ")}`;
 
   return (
     <>
@@ -77,13 +95,11 @@ const HydrationSummary = () => {
               gap={0.5}
             >
               of {adjustedGoal}ml
-              {caffeineOffset > 0 && (
+              {(caffeineOffset > 0 || weatherAdjustment > 0) && (
                 <>
                   {" "}
                   adjusted goal
-                  <Tooltip
-                    title={`Your goal is adjusted by +${caffeineOffset}ml (caffeine)`}
-                  >
+                  <Tooltip title={tooltipText}>
                     <InfoOutlinedIcon
                       sx={{
                         fontSize: "1em",
@@ -117,23 +133,28 @@ const HydrationSummary = () => {
           }}
         />
 
-        {/* <Typography variant="body2" display="flex" alignItems="center" gap={0.5}>
-        <WhatshotIcon fontSize="small" /> Weather: +500ml needed
-      </Typography> */}
-
-        {/* Caffeine offset info line */}
-        {caffeineOffset > 0 && (
-          <Box display="flex" alignItems="center" gap={0.5}>
-            <LocalCafeIcon sx={{ fontSize: "1rem" }} />
-            <Typography
-              variant="caption" // smaller than body2
-              sx={{ fontSize: "0.75rem" }} // optional: fine-tuned size
-            >
-              Caffeine: +{caffeineOffset}ml needed
-            </Typography>
+        {(weatherAdjustment > 0 || caffeineOffset > 0) && (
+          <Box display="flex" alignItems="center" gap={2} mt={1}>
+            {weatherAdjustment > 0 && (
+              <Box display="flex" alignItems="center" gap={0.5}>
+                <WbSunnyIcon sx={{ fontSize: "0.8rem" }} />
+                <Typography variant="caption" sx={{ fontSize: "0.65rem" }}>
+                  Weather: +{weatherAdjustment}ml needed
+                </Typography>
+              </Box>
+            )}
+            {caffeineOffset > 0 && (
+              <Box display="flex" alignItems="center" gap={0.5}>
+                <LocalCafeIcon sx={{ fontSize: "0.8rem" }} />
+                <Typography variant="caption" sx={{ fontSize: "0.65rem" }}>
+                  Caffeine: +{caffeineOffset}ml needed
+                </Typography>
+              </Box>
+            )}
           </Box>
         )}
 
+        {/* Achievements */}
         {unlockedAchievements.length > 0 && (
           <Box mt={1} display="flex" flexWrap="wrap" gap={1}>
             {unlockedAchievements.map((a) => (
@@ -163,6 +184,7 @@ const HydrationSummary = () => {
           </Box>
         )}
 
+        {/* Action buttons */}
         <Box mt={1} display="flex" gap={1}>
           <Button
             startIcon={<RestartAltIcon />}

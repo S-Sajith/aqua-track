@@ -4,6 +4,7 @@ import { Box } from "@mui/material";
 import QuickAdd from "./components/QuickAdd";
 import Footer from "./components/Footer";
 import TabBar from "./components/TabBar/TabBar";
+import WeatherBasedHydration from "./components/WeatherBasedHydration";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           }}
         >
           <HydrationSummary />
+          <WeatherBasedHydration />
           <QuickAdd />
           <TabBar />
         </Box>

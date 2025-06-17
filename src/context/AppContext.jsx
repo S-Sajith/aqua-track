@@ -14,6 +14,7 @@ export const AppProvider = ({ children }) => {
     const stored = localStorage.getItem("aquatrack_history");
     return stored ? JSON.parse(stored) : [];
   });
+  const [weatherAdjustment, setWeatherAdjustment] = useState(0);
 
   // Persist hydrationData to localStorage
   useEffect(() => {
@@ -170,6 +171,8 @@ export const AppProvider = ({ children }) => {
         resetToday,
         resetLogs,
         achievements,
+        weatherAdjustment,
+        setWeatherAdjustment,
       }}
     >
       {children}
