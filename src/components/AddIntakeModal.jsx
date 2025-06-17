@@ -8,31 +8,9 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import LocalDrinkIcon from "@mui/icons-material/LocalDrink";
-import ScienceIcon from "@mui/icons-material/Science";
-import CategoryIcon from "@mui/icons-material/Category";
-import OpacityIcon from "@mui/icons-material/Opacity";
-import LocalCafeIcon from "@mui/icons-material/LocalCafe";
-import WineBarIcon from "@mui/icons-material/WineBar";
 import { useState } from "react";
 import { useAppContext } from "../context/AppContext";
-
-const containers = [
-  { label: "Glass", volume: 250, icon: <LocalDrinkIcon color="primary" /> },
-  { label: "Small Bottle", volume: 500, icon: <ScienceIcon color="primary" /> },
-  {
-    label: "Regular Bottle",
-    volume: 750,
-    icon: <CategoryIcon color="primary" />,
-  },
-  {
-    label: "Large Bottle",
-    volume: 1000,
-    icon: <OpacityIcon color="primary" />,
-  },
-  { label: "Coffee Mug", volume: 350, icon: <LocalCafeIcon color="primary" /> },
-  { label: "Milk Glass", volume: 300, icon: <WineBarIcon color="primary" /> },
-];
+import { containers } from "../constants/DrinkSources";
 
 const AddIntakeModal = ({ handleClose }) => {
   const { addLog } = useAppContext();

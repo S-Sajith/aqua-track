@@ -11,48 +11,7 @@ import { useAppContext } from "../../context/AppContext";
 import { useState, cloneElement } from "react";
 import CaffeineModal from "../CaffeineModal";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
-import EmojiFoodBeverageIcon from "@mui/icons-material/EmojiFoodBeverage";
-import FlashOnIcon from "@mui/icons-material/FlashOn";
-import BubbleChartIcon from "@mui/icons-material/BubbleChart";
-
-const caffeineSources = [
-  {
-    label: "Coffee",
-    amount: 95,
-    volume: 250,
-    icon: <LocalCafeIcon color="primary" />,
-  },
-  {
-    label: "Espresso",
-    amount: 63,
-    volume: 30,
-    icon: <LocalCafeIcon color="primary" />,
-  },
-  {
-    label: "Black Tea",
-    amount: 47,
-    volume: 250,
-    icon: <EmojiFoodBeverageIcon color="primary" />,
-  },
-  {
-    label: "Green Tea",
-    amount: 28,
-    volume: 250,
-    icon: <EmojiFoodBeverageIcon color="primary" />,
-  },
-  {
-    label: "Energy Drink",
-    amount: 80,
-    volume: 250,
-    icon: <FlashOnIcon color="primary" />,
-  },
-  {
-    label: "Cola",
-    amount: 34,
-    volume: 330,
-    icon: <BubbleChartIcon color="primary" />,
-  },
-];
+import { caffeineSources } from "../../constants/DrinkSources";
 
 const CaffeineTab = () => {
   const { hydrationData } = useAppContext();
@@ -185,7 +144,22 @@ const CaffeineTab = () => {
           {caffeineSources.map((source, index) => (
             <Grid key={index} size={{ xs: 6, md: 4 }}>
               <Box display="flex" alignItems="center" gap={1}>
-                {cloneElement(source.icon, { sx: { fontSize: "1rem" } })}
+                <Box
+                  sx={{
+                    bgcolor: "#e0f2f1",
+                    borderRadius: "50%",
+                    width: 28,
+                    height: 28,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  {cloneElement(source.icon, {
+                    sx: { fontSize: "1rem" },
+                  })}
+                </Box>
+
                 <Typography variant="body2" sx={{ fontSize: "0.75rem" }}>
                   {source.label}:{" "}
                   <Box component="span" fontWeight="bold">

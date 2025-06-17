@@ -1,27 +1,9 @@
 import { Box, Typography, Button, Grid, Paper, Modal } from "@mui/material";
-import LocalDrinkIcon from "@mui/icons-material/LocalDrink";
-import ScienceIcon from "@mui/icons-material/Science";
-import CategoryIcon from "@mui/icons-material/Category";
-import OpacityIcon from "@mui/icons-material/Opacity";
 import AddIcon from "@mui/icons-material/Add";
 import { useAppContext } from "../context/AppContext";
 import { useState } from "react";
 import AddIntakeModal from "./AddIntakeModal";
-
-const containers = [
-  { label: "Glass", volume: 250, icon: <LocalDrinkIcon color="primary" /> },
-  { label: "Small Bottle", volume: 500, icon: <ScienceIcon color="primary" /> },
-  {
-    label: "Regular Bottle",
-    volume: 750,
-    icon: <CategoryIcon color="primary" />,
-  },
-  {
-    label: "Large Bottle",
-    volume: 1000,
-    icon: <OpacityIcon color="primary" />,
-  },
-];
+import { containers } from "../constants/DrinkSources";
 
 const QuickAdd = () => {
   const { addLog } = useAppContext();
@@ -40,7 +22,7 @@ const QuickAdd = () => {
         </Typography>
 
         <Grid container spacing={2} mt={1}>
-          {containers.map((item, index) => (
+          {containers.slice(0, 4).map((item, index) => (
             <Grid size={{ xs: 6, md: 3 }} key={index}>
               <Paper
                 elevation={1}

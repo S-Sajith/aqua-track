@@ -9,51 +9,9 @@ import {
   MenuItem,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import LocalCafeIcon from "@mui/icons-material/LocalCafe";
-import FlashOnIcon from "@mui/icons-material/FlashOn";
-import EmojiFoodBeverageIcon from "@mui/icons-material/EmojiFoodBeverage";
-import BubbleChartIcon from "@mui/icons-material/BubbleChart";
 import { useState } from "react";
 import { useAppContext } from "../context/AppContext";
-
-const caffeineSources = [
-  {
-    label: "Coffee",
-    amount: 95,
-    volume: 250,
-    icon: <LocalCafeIcon color="primary" />,
-  },
-  {
-    label: "Espresso",
-    amount: 63,
-    volume: 30,
-    icon: <LocalCafeIcon color="primary" />,
-  },
-  {
-    label: "Black Tea",
-    amount: 47,
-    volume: 250,
-    icon: <EmojiFoodBeverageIcon color="primary" />,
-  },
-  {
-    label: "Green Tea",
-    amount: 28,
-    volume: 250,
-    icon: <EmojiFoodBeverageIcon color="primary" />,
-  },
-  {
-    label: "Energy Drink",
-    amount: 80,
-    volume: 250,
-    icon: <FlashOnIcon color="primary" />,
-  },
-  {
-    label: "Cola",
-    amount: 34,
-    volume: 330,
-    icon: <BubbleChartIcon color="primary" />,
-  },
-];
+import { caffeineSources } from "../constants/DrinkSources";
 
 const AddCaffeineModal = ({ handleClose }) => {
   const { setHydrationData } = useAppContext();
@@ -242,7 +200,6 @@ const AddCaffeineModal = ({ handleClose }) => {
               size="small"
               value={selected?.label || ""}
               onChange={handleDropdownChange}
-              displayEmpty
             >
               <MenuItem value="" disabled>
                 Select source
