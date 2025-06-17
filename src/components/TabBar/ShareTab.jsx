@@ -31,7 +31,7 @@ const ShareTab = () => {
       : "No achievements unlocked today — but I'm staying consistent!",
     "",
     "Stay hydrated, friends! 🧃",
-    "Track your water intake too at aqua-track.com",
+    "Track your water intake too at https://aqua-track-app.netlify.app/",
   ].join("\n");
 
   const handleCopy = () => {
