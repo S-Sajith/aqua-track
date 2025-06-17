@@ -5,7 +5,7 @@ import ThermostatIcon from "@mui/icons-material/Thermostat";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
 import { useAppContext } from "../context/AppContext";
 
-const WEATHER_API_KEY = "c921c73f2b6ca6157c8af5fd2c00d452";
+const WEATHER_API_KEY = "f03dedaa448d34090c2a170b64bf2a95";
 
 const WeatherBasedHydration = () => {
   const { baseGoal, setWeatherAdjustment } = useAppContext();
