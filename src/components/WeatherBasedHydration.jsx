@@ -1,5 +1,12 @@
 import { useEffect, useState, useMemo, useCallback } from "react";
-import { Box, Typography, Button, CircularProgress, Chip } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  CircularProgress,
+  Chip,
+  useTheme,
+} from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ThermostatIcon from "@mui/icons-material/Thermostat";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
@@ -11,6 +18,8 @@ const WeatherBasedHydration = () => {
   const { baseGoal, setWeatherAdjustment } = useAppContext();
   const [weather, setWeather] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  const theme = useTheme();
 
   const fetchWeather = useCallback((lat, lon) => {
     setLoading(true);
@@ -81,7 +90,7 @@ const WeatherBasedHydration = () => {
           mt: 2,
           p: 3,
           borderRadius: 2,
-          background: "#fff",
+          background: theme.palette.background.paper,
           boxShadow: 1,
           textAlign: "center",
         }}
@@ -100,7 +109,7 @@ const WeatherBasedHydration = () => {
         </Typography>
         <Button
           variant="contained"
-          sx={{ mt: 2, background: "black" }}
+          sx={{ mt: 2, backgroundColor: theme.palette.text.primary }}
           onClick={enableLocation}
         >
           Enable Location
@@ -115,7 +124,7 @@ const WeatherBasedHydration = () => {
         mt: 2,
         p: 3,
         borderRadius: 2,
-        background: "#fff",
+        background: theme.palette.background.paper,
         boxShadow: 1,
       }}
     >
@@ -129,7 +138,7 @@ const WeatherBasedHydration = () => {
       <Box display="flex" alignItems="center" gap={2} mt={2}>
         <Box
           sx={{
-            backgroundColor: "#ffffff",
+            backgroundColor: theme.palette.background.paper,
             border: "1px solid #e0e0e0",
             borderRadius: "50%",
             padding: "0.3rem",

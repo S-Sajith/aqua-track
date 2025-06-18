@@ -6,6 +6,7 @@ import {
   Paper,
   TextField,
   Typography,
+  useTheme,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
@@ -16,6 +17,7 @@ const AddIntakeModal = ({ handleClose }) => {
   const { addLog } = useAppContext();
   const [selected, setSelected] = useState(null);
   const [customAmount, setCustomAmount] = useState("");
+  const theme = useTheme();
 
   const handleSubmit = () => {
     const amount = selected?.volume || parseInt(customAmount);
@@ -32,7 +34,7 @@ const AddIntakeModal = ({ handleClose }) => {
   return (
     <Box
       sx={{
-        backgroundColor: "white",
+        backgroundColor: theme.palette.background.paper,
         width: {
           xs: "85dvw", // xs = extra small (mobile)
           sm: "60dvw", // sm = small (tablets)
@@ -71,7 +73,7 @@ const AddIntakeModal = ({ handleClose }) => {
           position: "absolute",
           top: 8,
           right: 8,
-          color: "grey.500",
+          color: theme.palette.grey[500],
         }}
         aria-label="close"
       >
@@ -99,16 +101,19 @@ const AddIntakeModal = ({ handleClose }) => {
                 setCustomAmount("");
               }}
               sx={{
-                height: "70%",
+                height: "fit-content",
                 p: 1.5,
                 borderRadius: 2,
                 textAlign: "center",
                 cursor: "pointer",
                 border:
                   selected?.label === item.label
-                    ? "2px solid #1976d2"
-                    : "1px solid #ccc",
-                bgcolor: selected?.label === item.label ? "#e3f2fd" : "white",
+                    ? `2px solid ${theme.palette.primary.main}`
+                    : `1px solid ${theme.palette.divider}`,
+                bgcolor:
+                  selected?.label === item.label
+                    ? theme.palette.primary.light
+                    : theme.palette.background.paper,
               }}
             >
               <Box mb={0.5}>{item.icon}</Box>
@@ -162,11 +167,13 @@ const AddIntakeModal = ({ handleClose }) => {
         variant="contained"
         sx={{
           mt: 3,
-          backgroundColor: "black",
-          color: "white",
+          backgroundColor: theme.palette.text.primary,
+          color: theme.palette.background.paper,
           textTransform: "none",
           fontSize: { xs: "0.75rem", sm: "0.85rem", md: "1rem" },
-          "&:hover": { backgroundColor: "#333" },
+          "&:hover": {
+            backgroundColor: theme.palette.text.secondary,
+          },
         }}
         onClick={handleSubmit}
       >

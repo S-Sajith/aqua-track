@@ -6,6 +6,7 @@ import {
   Switch,
   Divider,
   IconButton,
+  useTheme,
 } from "@mui/material";
 import DownloadIcon from "@mui/icons-material/Download";
 import UploadIcon from "@mui/icons-material/Upload";
@@ -15,8 +16,16 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useAppContext } from "../context/AppContext";
 
 const Settings = ({ handleClose }) => {
-  const { baseGoal, setBaseGoal, resetLogs, setHydrationData } =
-    useAppContext();
+  const {
+    baseGoal,
+    setBaseGoal,
+    resetLogs,
+    setHydrationData,
+    darkMode,
+    setDarkMode,
+  } = useAppContext();
+
+  const theme = useTheme();
 
   const handleExport = () => {
     const localHistory = localStorage.getItem("aquatrack_history");
@@ -79,7 +88,7 @@ const Settings = ({ handleClose }) => {
   return (
     <Box
       sx={{
-        backgroundColor: "white",
+        backgroundColor: "background.paper",
         width: {
           xs: "80dvw", // xs = extra small (mobile)
           sm: "55dvw", // sm = small (tablets)
@@ -109,7 +118,7 @@ const Settings = ({ handleClose }) => {
           position: "absolute",
           top: 8,
           right: 8,
-          color: "grey.500",
+          color: theme.palette.text.secondary,
         }}
         aria-label="close"
       >
@@ -153,10 +162,13 @@ const Settings = ({ handleClose }) => {
           mt: 0.5,
         }}
       >
-        <Typography variant="body1" color="textPrimary">
+        <Typography variant="body1" color="text.primary">
           Dark Mode
         </Typography>
-        <Switch />
+        <Switch
+          checked={darkMode}
+          onChange={(e) => setDarkMode(e.target.checked)}
+        />
       </Box>
 
       {/* Data Management */}

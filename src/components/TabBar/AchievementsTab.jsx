@@ -1,9 +1,10 @@
-import { Box, Typography, Grid, Paper, Chip } from "@mui/material";
+import { Box, Typography, Grid, Paper, Chip, useTheme } from "@mui/material";
 import { useAppContext } from "../../context/AppContext";
 import { parseISO, differenceInCalendarDays } from "date-fns";
 
 const AchievementsTab = () => {
   const { hydrationData, baseGoal, achievements } = useAppContext();
+  const theme = useTheme();
 
   const sortedData = [...hydrationData].sort(
     (a, b) => new Date(a.date) - new Date(b.date)
@@ -43,16 +44,22 @@ const AchievementsTab = () => {
         {achievements.map((ach, i) => (
           <Grid size={{ xs: 6, md: 3 }} key={i}>
             <Paper
-              elevation={1}
+              elevation={3}
               sx={{
                 p: 2,
                 textAlign: "center",
                 borderRadius: 2,
-                bgcolor: ach.achieved ? "#E8F0FE" : "#FFFFFF",
-                color: ach.achieved ? "#4285F4" : "text.primary",
-                border: ach.achieved
-                  ? "1px solid #4285F4"
-                  : "1px solid #E0E0E0",
+                bgcolor: ach.achieved
+                  ? theme.palette.primary.light
+                  : theme.palette.background.paper,
+                color: ach.achieved
+                  ? theme.palette.primary.main
+                  : theme.palette.text.primary,
+                border: `1px solid ${
+                  ach.achieved
+                    ? theme.palette.primary.main
+                    : theme.palette.divider
+                }`,
               }}
             >
               <Box
@@ -60,7 +67,9 @@ const AchievementsTab = () => {
                   mb: 1,
                   display: "flex",
                   justifyContent: "center",
-                  color: ach.achieved ? "primary.main" : "grey.400",
+                  color: ach.achieved
+                    ? theme.palette.primary.main
+                    : theme.palette.grey[400],
                 }}
               >
                 {ach.icon}
@@ -130,21 +139,30 @@ const AchievementsTab = () => {
   );
 };
 
-const Stat = ({ label, value }) => (
-  <Box
-    sx={{
-      minWidth: 120,
-      p: 2,
-      borderRadius: 2,
-      bgcolor: "#f9f9f9",
-      textAlign: "center",
-    }}
-  >
-    <Typography fontWeight="bold">{value}</Typography>
-    <Typography variant="caption" color="text.secondary">
-      {label}
-    </Typography>
-  </Box>
-);
+const Stat = ({ label, value }) => {
+  const theme = useTheme();
+  const isDark = theme.palette.mode === "dark";
+
+  return (
+    <Box
+      sx={{
+        minWidth: 120,
+        p: 2,
+        borderRadius: 2,
+        bgcolor: isDark ? theme.palette.background.paper : "#f9f9f9",
+        textAlign: "center",
+        boxShadow: isDark ? 3 : 2,
+        border: `1px solid ${theme.palette.divider}`,
+      }}
+    >
+      <Typography fontWeight="bold" color="text.primary">
+        {value}
+      </Typography>
+      <Typography variant="caption" color="text.secondary">
+        {label}
+      </Typography>
+    </Box>
+  );
+};
 
 export default AchievementsTab;

@@ -12,10 +12,12 @@ import { useState, cloneElement } from "react";
 import CaffeineModal from "../CaffeineModal";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import { caffeineSources } from "../../constants/DrinkSources";
+import { useTheme } from "@mui/material/styles";
 
 const CaffeineTab = () => {
   const { hydrationData } = useAppContext();
   const [openModal, setOpenModal] = useState(false);
+  const theme = useTheme();
 
   const today = new Date().toISOString().split("T")[0];
   const todayEntry = hydrationData.find((entry) => entry.date === today);
@@ -30,7 +32,13 @@ const CaffeineTab = () => {
   return (
     <Box mt={2}>
       {/* Top Box */}
-      <Box p={3} borderRadius={2} boxShadow={1} bgcolor="#fff" mb={3}>
+      <Box
+        p={3}
+        borderRadius={2}
+        boxShadow={4}
+        bgcolor={theme.palette.background.paper}
+        mb={3}
+      >
         <Typography variant="h6" fontWeight="bold" mb={1}>
           Caffeine Offset Calculator
         </Typography>
@@ -68,11 +76,11 @@ const CaffeineTab = () => {
           startIcon={<LocalCafeIcon />}
           onClick={handleOpen}
           sx={{
-            backgroundColor: "#000",
-            color: "#fff",
+            backgroundColor: theme.palette.mode === "dark" ? "#fff" : "#000",
+            color: theme.palette.mode === "dark" ? "#000" : "#fff",
             textTransform: "none",
             "&:hover": {
-              backgroundColor: "#333",
+              backgroundColor: theme.palette.mode === "dark" ? "#ddd" : "#333",
             },
           }}
         >
@@ -93,7 +101,11 @@ const CaffeineTab = () => {
                 alignItems="center"
                 p={1.5}
                 borderRadius={1}
-                bgcolor="#f9f9f9"
+                bgcolor={
+                  theme.palette.mode === "dark"
+                    ? theme.palette.background.default
+                    : "#f9f9f9"
+                }
                 mb={1}
               >
                 <Box display="flex" alignItems="center" gap={1}>
@@ -124,7 +136,12 @@ const CaffeineTab = () => {
       </Box>
 
       {/* Info Box */}
-      <Box p={3} borderRadius={2} boxShadow={1} bgcolor="#fff">
+      <Box
+        p={3}
+        borderRadius={2}
+        boxShadow={4}
+        bgcolor={theme.palette.background.paper}
+      >
         <Typography variant="h6" fontWeight="bold" gutterBottom>
           How Caffeine Affects Hydration
         </Typography>
@@ -146,7 +163,8 @@ const CaffeineTab = () => {
               <Box display="flex" alignItems="center" gap={1}>
                 <Box
                   sx={{
-                    bgcolor: "#e0f2f1",
+                    bgcolor:
+                      theme.palette.mode === "dark" ? "#1e3d3a" : "#e0f2f1",
                     borderRadius: "50%",
                     width: 28,
                     height: 28,

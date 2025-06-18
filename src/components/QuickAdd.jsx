@@ -1,4 +1,12 @@
-import { Box, Typography, Button, Grid, Paper, Modal } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Button,
+  Grid,
+  Paper,
+  Modal,
+  useTheme,
+} from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useAppContext } from "../context/AppContext";
 import { useState } from "react";
@@ -11,9 +19,17 @@ const QuickAdd = () => {
   const handleOpenAddIntake = () => setOpenAddIntake(true);
   const handleCloseAddIntake = () => setOpenAddIntake(false);
 
+  const theme = useTheme();
+
   return (
     <>
-      <Box mt={4} p={2} borderRadius={2} boxShadow={2} bgcolor="white">
+      <Box
+        mt={4}
+        p={2}
+        borderRadius={2}
+        boxShadow={2}
+        bgcolor={theme.palette.background.paper}
+      >
         <Typography variant="h6" fontWeight="bold">
           Quick Add
         </Typography>
@@ -51,12 +67,12 @@ const QuickAdd = () => {
           variant="contained"
           sx={{
             mt: 2,
-            backgroundColor: "black",
-            color: "white",
+            backgroundColor: theme.palette.text.primary,
+            color: theme.palette.background.paper,
             borderRadius: 2,
             textTransform: "none",
             "&:hover": {
-              backgroundColor: "#333",
+              backgroundColor: theme.palette.text.secondary,
             },
           }}
           onClick={handleOpenAddIntake}

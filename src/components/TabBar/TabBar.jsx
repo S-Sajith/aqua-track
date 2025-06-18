@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs, useTheme } from "@mui/material";
 import { useState } from "react";
 import TodayTab from "./TodayTab";
 import HistoryTab from "./HistoryTab";
@@ -11,6 +11,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 const TabBar = () => {
   const [tabIndex, setTabIndex] = useState(0);
   const isMobile = useMediaQuery("(max-width:600px)");
+  const theme = useTheme();
 
   const handleChange = (event, newValue) => {
     setTabIndex(newValue);
@@ -18,14 +19,23 @@ const TabBar = () => {
 
   return (
     <div>
-      <Box mt={4} p={2} borderRadius={2} boxShadow={2}>
+      <Box
+        mt={4}
+        p={2}
+        borderRadius={2}
+        boxShadow={2}
+        bgcolor={theme.palette.background.paper}
+      >
         <Tabs
           value={tabIndex}
           onChange={handleChange}
           variant={isMobile ? "scrollable" : "fullWidth"}
           scrollButtons="auto"
           sx={{
-            backgroundColor: "#f5f5f5",
+            backgroundColor:
+              theme.palette.mode === "dark"
+                ? theme.palette.background.default
+                : "#f5f5f5",
             borderRadius: "8px",
             minHeight: "40px",
             "& .MuiTabs-indicator": {
@@ -46,10 +56,13 @@ const TabBar = () => {
               },
             },
             "& .Mui-selected": {
-              backgroundColor: "#fff",
+              backgroundColor: theme.palette.background.paper,
               fontWeight: "bold",
-              boxShadow: "0 1px 4px rgba(0,0,0,0.1)",
-              color: "#000",
+              boxShadow:
+                theme.palette.mode === "dark"
+                  ? "0 2px 8px rgba(0, 0, 0, 0.6)"
+                  : "0 1px 4px rgba(0, 0, 0, 0.1)",
+              color: theme.palette.text.primary,
             },
           }}
         >

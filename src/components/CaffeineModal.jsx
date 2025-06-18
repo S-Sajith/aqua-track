@@ -7,6 +7,7 @@ import {
   TextField,
   Typography,
   MenuItem,
+  useTheme,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
@@ -17,6 +18,7 @@ const AddCaffeineModal = ({ handleClose }) => {
   const { setHydrationData } = useAppContext();
   const [selected, setSelected] = useState(null);
   const [customAmount, setCustomAmount] = useState("");
+  const theme = useTheme();
 
   const handleDropdownChange = (e) => {
     const selectedItem = caffeineSources.find(
@@ -82,7 +84,7 @@ const AddCaffeineModal = ({ handleClose }) => {
   return (
     <Box
       sx={{
-        backgroundColor: "white",
+        backgroundColor: theme.palette.background.paper,
         width: {
           xs: "85dvw",
           sm: "60dvw",
@@ -120,7 +122,7 @@ const AddCaffeineModal = ({ handleClose }) => {
           position: "absolute",
           top: 8,
           right: 8,
-          color: "grey.500",
+          color: theme.palette.grey[500],
         }}
         aria-label="close"
       >
@@ -153,9 +155,12 @@ const AddCaffeineModal = ({ handleClose }) => {
                 cursor: "pointer",
                 border:
                   selected?.label === item.label
-                    ? "2px solid #1976d2"
-                    : "1px solid #ccc",
-                bgcolor: selected?.label === item.label ? "#e3f2fd" : "white",
+                    ? `2px solid ${theme.palette.primary.main}`
+                    : `1px solid ${theme.palette.divider}`,
+                bgcolor:
+                  selected?.label === item.label
+                    ? theme.palette.primary.light
+                    : theme.palette.background.paper,
               }}
             >
               <Box mb={0.5}>{item.icon}</Box>
@@ -234,11 +239,11 @@ const AddCaffeineModal = ({ handleClose }) => {
         variant="contained"
         sx={{
           mt: 1,
-          backgroundColor: "black",
-          color: "white",
+          backgroundColor: theme.palette.text.primary,
+          color: theme.palette.background.paper,
           textTransform: "none",
           fontSize: { xs: "0.75rem", sm: "0.85rem", md: "1rem" },
-          "&:hover": { backgroundColor: "#333" },
+          "&:hover": { backgroundColor: theme.palette.text.secondary },
         }}
         onClick={() =>
           logCaffeineIntake(customAmount, selected?.label, selected?.volume)

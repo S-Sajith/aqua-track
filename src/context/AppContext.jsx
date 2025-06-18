@@ -16,6 +16,15 @@ export const AppProvider = ({ children }) => {
   });
   const [weatherAdjustment, setWeatherAdjustment] = useState(0);
 
+  const [darkMode, setDarkMode] = useState(() => {
+    const stored = localStorage.getItem("aquatrack_dark_mode");
+    return stored === "true";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("aquatrack_dark_mode", darkMode);
+  }, [darkMode]);
+
   // Persist hydrationData to localStorage
   useEffect(() => {
     localStorage.setItem("aquatrack_history", JSON.stringify(hydrationData));
@@ -173,6 +182,8 @@ export const AppProvider = ({ children }) => {
         achievements,
         weatherAdjustment,
         setWeatherAdjustment,
+        darkMode,
+        setDarkMode,
       }}
     >
       {children}

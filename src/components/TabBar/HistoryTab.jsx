@@ -1,10 +1,11 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 import { useAppContext } from "../../context/AppContext";
 import { parseISO, format, startOfWeek, addDays, isSameDay } from "date-fns";
 import React from "react";
 
 const HistoryTab = () => {
   const { hydrationData, baseGoal } = useAppContext();
+  const theme = useTheme();
 
   const getWeeklyOverview = () => {
     const weekStart = startOfWeek(new Date(), { weekStartsOn: 1 }); // Monday
@@ -65,7 +66,8 @@ const HistoryTab = () => {
                 xs: 8,
                 sm: 9,
               },
-              backgroundColor: "#eee",
+              backgroundColor:
+                theme.palette.mode === "dark" ? "black" : "white",
               borderRadius: 4,
               overflow: "hidden",
             }}
@@ -74,7 +76,8 @@ const HistoryTab = () => {
               sx={{
                 width: `${Math.min((day.total / baseGoal) * 100, 100)}%`,
                 height: "100%",
-                backgroundColor: "black",
+                backgroundColor:
+                  theme.palette.mode === "dark" ? "white" : "black",
               }}
             />
           </Box>
