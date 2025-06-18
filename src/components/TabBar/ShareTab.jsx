@@ -1,10 +1,11 @@
-import { Box, Button, Typography, Chip } from "@mui/material";
+import { Box, Button, Typography, Chip, useTheme } from "@mui/material";
 import { ContentCopy } from "@mui/icons-material";
 import { useState } from "react";
 import { useAppContext } from "../../context/AppContext";
 import { isSameDay, parseISO } from "date-fns";
 
 const ShareTab = () => {
+  const theme = useTheme();
   const { hydrationData, baseGoal, achievements } = useAppContext();
   const [copied, setCopied] = useState(false);
 
@@ -52,11 +53,18 @@ const ShareTab = () => {
 
       {/* Share Text Box */}
       <Box
-        bgcolor="#e6f0ff"
-        borderRadius={2}
-        p={2}
-        mb={2}
-        sx={{ whiteSpace: "pre-line", fontSize: "14px" }}
+        sx={{
+          bgcolor:
+            theme.palette.mode === "dark"
+              ? theme.palette.action.selected
+              : "#e6f0ff",
+          borderRadius: 2,
+          p: 2,
+          mb: 2,
+          whiteSpace: "pre-line",
+          fontSize: "14px",
+          color: theme.palette.text.primary,
+        }}
       >
         {shareText}
       </Box>
@@ -68,9 +76,13 @@ const ShareTab = () => {
           variant="contained"
           fullWidth
           sx={{
-            backgroundColor: "#000",
-            color: "#fff",
-            "&:hover": { backgroundColor: "#222" },
+            backgroundColor: theme.palette.text.primary,
+            color: theme.palette.background.paper,
+            borderRadius: 2,
+            textTransform: "none",
+            "&:hover": {
+              backgroundColor: theme.palette.text.secondary,
+            },
             textTransform: "none",
           }}
           startIcon={<ContentCopy />}
@@ -89,9 +101,14 @@ const ShareTab = () => {
             display="flex"
             gap={1}
             flexWrap="wrap"
-            bgcolor="#f9f9f9"
-            borderRadius={2}
-            p={1}
+            sx={{
+              bgcolor:
+                theme.palette.mode === "dark"
+                  ? theme.palette.background.paper
+                  : "#f9f9f9",
+              borderRadius: 2,
+              p: 1,
+            }}
           >
             {earnedAchievements.map((a) => (
               <Chip

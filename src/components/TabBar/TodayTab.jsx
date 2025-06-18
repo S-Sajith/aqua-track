@@ -1,4 +1,4 @@
-import { Box, Typography, Paper, List } from "@mui/material";
+import { Box, Typography, Paper, List, useTheme } from "@mui/material";
 import { useAppContext } from "../../context/AppContext";
 import { isToday, parseISO } from "date-fns";
 
@@ -30,6 +30,7 @@ const getIntakeIcon = (type) => {
 
 const TodayTab = () => {
   const { hydrationData, baseGoal } = useAppContext();
+  const theme = useTheme();
 
   const todayLogs =
     hydrationData.find((d) => isToday(parseISO(d.date)))?.logs || [];
@@ -58,7 +59,6 @@ const TodayTab = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-between",
-                backgroundColor: "#f9f9f9",
                 borderRadius: 2,
               }}
             >
