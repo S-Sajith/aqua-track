@@ -53,10 +53,52 @@ const WeatherBasedHydration = () => {
 
   useEffect(() => {
     const saved = localStorage.getItem("aquatrack_weather");
+
     if (saved) {
-      setWeather(JSON.parse(saved));
+      const parsed = JSON.parse(saved);
+      const lastFetchedDate = new Date(parsed.fetchTime);
+      const today = new Date();
+
+      const isSameDayFetch =
+        lastFetchedDate.getFullYear() === today.getFullYear() &&
+        lastFetchedDate.getMonth() === today.getMonth() &&
+        lastFetchedDate.getDate() === today.getDate();
+
+      if (isSameDayFetch) {
+        // If fetched today, just use saved
+        setWeather(parsed);
+      } else {
+        // Needs refetch – check location permission
+        navigator.permissions
+          .query({ name: "geolocation" })
+          .then((result) => {
+            if (result.state === "granted") {
+              navigator.geolocation.getCurrentPosition(
+                (position) =>
+                  fetchWeather(
+                    position.coords.latitude,
+                    position.coords.longitude
+                  ),
+                () => {
+                  alert("Unable to fetch location, please check permissions.");
+                }
+              );
+            } else {
+              // Permission revoked or not granted — prompt user again
+              alert(
+                "Location permission is required to update weather-based hydration recommendations."
+              );
+            }
+          })
+          .catch(() => {
+            // Fallback if Permissions API fails
+            alert(
+              "We couldn't verify your location permission. Please enable location access to update weather-based hydration."
+            );
+          });
+      }
     }
-  }, []);
+  }, [fetchWeather]);
 
   const adjustment = useMemo(() => {
     if (!weather) return 0;
@@ -209,39 +251,42 @@ const WeatherBasedHydration = () => {
       </Box>
 
       {/* Weather Impact */}
-      <Box mt={2}>
-        <Typography fontWeight="bold" fontSize="0.9rem">
-          Weather Impact
-        </Typography>
-        {weather.temperature > 30 && (
-          <Box
-            display="flex"
-            alignItems="center"
-            color="error.main"
-            fontSize="0.85rem"
-            mb={1}
-          >
-            <ThermostatIcon sx={{ fontSize: "0.8rem", mr: 0.5, mb: 0.15 }} />
-            <Typography fontSize="0.85rem">
-              High temperature increases water loss through sweat
-            </Typography>
-          </Box>
-        )}
+      {(weather.temperature > 30 || weather.humidity > 80) && (
+        <Box mt={2}>
+          <Typography fontWeight="bold" fontSize="0.9rem">
+            Weather Impact
+          </Typography>
 
-        {weather.humidity > 80 && (
-          <Box
-            display="flex"
-            alignItems="center"
-            color="primary.main"
-            fontSize="0.85rem"
-          >
-            <WaterDropIcon sx={{ fontSize: "0.8rem", mr: 0.5, mb: 0.15 }} />
-            <Typography fontSize="0.85rem">
-              High humidity reduces sweat evaporation
-            </Typography>
-          </Box>
-        )}
-      </Box>
+          {weather.temperature > 30 && (
+            <Box
+              display="flex"
+              alignItems="center"
+              color="error.main"
+              fontSize="0.85rem"
+              mb={1}
+            >
+              <ThermostatIcon sx={{ fontSize: "0.8rem", mr: 0.5, mb: 0.15 }} />
+              <Typography fontSize="0.85rem">
+                High temperature increases water loss through sweat
+              </Typography>
+            </Box>
+          )}
+
+          {weather.humidity > 80 && (
+            <Box
+              display="flex"
+              alignItems="center"
+              color="primary.main"
+              fontSize="0.85rem"
+            >
+              <WaterDropIcon sx={{ fontSize: "0.8rem", mr: 0.5, mb: 0.15 }} />
+              <Typography fontSize="0.85rem">
+                High humidity reduces sweat evaporation
+              </Typography>
+            </Box>
+          )}
+        </Box>
+      )}
     </Box>
   );
 };
