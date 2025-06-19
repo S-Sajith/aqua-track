@@ -10,12 +10,15 @@ Try the app live here: [https://aqua-track-app.netlify.app/](https://aqua-track-
 
 ## ✨ Features
 
-* **Hydration Tracking**: Log your water intake throughout the day.
-* **Daily Goals**: Set a personal hydration goal and watch your progress.
-* **Achievements**: Unlock badges for hitting key hydration milestones.
-* **Insights**: Visual summaries of your hydration habits over time.
-* **History**: Review your past hydration logs.
-* **Share Tab**: Generate a sharable summary of your daily progress.
+- **Hydration Tracking**: Log your water intake throughout the day.
+- **Daily Goals**: Set a personal hydration goal and watch your progress.
+- **Weather-Based Hydration**: Adjust your hydration needs based on local temperature and humidity.
+- **Caffeine Intake & Offset**: Track drinks with caffeine and see how it affects your hydration.
+- **Achievements**: Unlock badges for hitting key hydration milestones and maintaining streaks.
+- **Insights**: Visual summaries of your hydration habits over time.
+- **History**: Review your past hydration logs.
+- **Dark Mode**: Switch between light and dark themes for a better viewing experience.
+- **Share Tab**: Generate a sharable summary of your daily progress.
 
 ## 🛠️ Getting Started
 
@@ -46,33 +49,32 @@ To run the app locally:
 
 1. **Track Your Intake**
 
-   * Click on the drink buttons to log water consumption.
-   * See your current progress toward your daily goal.
+   - Click on the drink buttons to log water consumption.
+   - See your current progress toward your daily goal.
 
-2. **View Insights**
+2. **Weather & Caffeine Adjustments**
 
-   * Use the Insights tab to check trends and patterns.
+   - Enable location access to receive weather-based hydration suggestions.
+   - Log caffeinated drinks to adjust your goal accordingly.
 
-3. **Achievements**
+3. **View Insights**
 
-   * Unlock and view badges for consistency and milestones.
+   - Use the Insights tab to check trends and patterns.
 
-4. **Share Progress**
+4. **Achievements**
 
-   * Copy a formatted message to share your success with friends!
+   - Unlock and view badges for consistency and milestones.
+
+5. **Share Progress**
+
+   - Copy a formatted message to share your success with friends!
 
 ## 🧰 Technologies Used
 
-* **React** – For building the UI
-* **Material UI (MUI)** – Component styling and layout
-* **date-fns** – Date handling
-* **Context API** – State management across tabs
-
-## 🚀 Upcoming Features
-
-* [ ] **Caffeine Intake and Offset**
-* [ ] **Weather-Based Hydration Recommendations**
-* [ ] **Dark Mode**
+- **React** – For building the UI
+- **Material UI (MUI)** – Component styling and layout
+- **date-fns** – Date handling
+- **Context API** – State management across tabs
 
 ## 👨‍💻 Developer
 
@@ -83,8 +85,8 @@ GitHub: [S-Sajith](https://github.com/S-Sajith/aqua-track)
 
 Contributions are welcome! If you have suggestions or improvements:
 
-* Open an issue
-* Submit a pull request
+- Open an issue
+- Submit a pull request
 
 ---
 
