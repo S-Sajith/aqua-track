@@ -66,8 +66,7 @@ const HistoryTab = () => {
                 xs: 8,
                 sm: 9,
               },
-              backgroundColor:
-                theme.palette.mode === "dark" ? "black" : "white",
+              backgroundColor: theme.palette.mode === "dark" ? "black" : "#eee",
               borderRadius: 4,
               overflow: "hidden",
             }}
